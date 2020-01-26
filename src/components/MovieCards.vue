@@ -40,5 +40,9 @@ export default {
 };
 </script>
 <style scoped>
-
+.img-fluid {
+  margin-top: 20px !important;
+  border-radius: 20px !important;
+  object-fit: cover;
+}
 </style>
