@@ -8,7 +8,11 @@
     </div>
   </div>
 
- 
+  <div class="button-div1">
+      <div class="button-div2">
+        <button @click="loadMore()" >Load More</button>
+      </div>
+    </div>
 </section>
   
 </template>
@@ -18,7 +22,8 @@ export default {
   props: {},
   data() {
     return {
-      movies:[]
+      movies:[],
+      page:1
     };
 
   },
@@ -26,23 +31,60 @@ export default {
     this.allMovies()
   },
   methods: {
-    allMovies() {
-      axios.get('https://api.themoviedb.org/3/tv/popular?api_key=ff6c692c4f090dc865844a469f17ba27&language=en-US&page=1')
+    allMovies(page=1) {
+      axios.get('https://api.themoviedb.org/3/tv/popular?api_key=ff6c692c4f090dc865844a469f17ba27&language=en-US&page='+page)
     .then(response => {
-      this.movies = response.data.results;
-      console.log(this.movies)
+      if(page !== 1) {
+        response = response.data.results.filter(res => res.poster_path != null); 
+        response.forEach(res => {
+          this.movies.push(res);
+        })
+        // this.movies.concat()
+      } else {
+        this.movies = response.data.results.filter(res => res.poster_path != null);
+      }
+      
+      // console.log(this.movies)
     })
     .catch(error => {
       console.log(error)
     })
-    }
+    },
+
+    loadMore() {
+      this.page+=1;
+      this.allMovies(this.page);
+      
+    },
   }
 };
 </script>
 <style scoped>
 .img-fluid {
-  margin-top: 20px !important;
+  margin-top: 30px !important;
   border-radius: 20px !important;
-  object-fit: cover;
+  object-fit: cover !important;
+  transition: all 0.3s ease 0s !important;
 }
+
+button {
+  background: #313131;
+  color: white;
+  padding: 20px !important;
+  width: 25% !important;
+  border-radius: 40px !important;
+  font-size: 25px;  
+  border: none;
+}
+button:active {
+    outline: none !important;
+    border: none !important;
+}
+.button-div1 {
+  text-align: center;
+  margin-top: 25px;
+  border: none
+}
+
+
 </style>
