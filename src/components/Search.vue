@@ -23,20 +23,21 @@ nav {
 input {
   width: 60%;
   border: none;
-  padding: 18px 0;
+  padding: 10px 0;
   background: #8a8686;
 }
 
 ::placeholder {
     color: #313131;
     /* font-weight: 30px; */
-    font-size: 25px;
+    font-size: 18px;
 }
 img {
   height: 30px;
   width: 60px;
-  margin-top: 15px;
+  margin-top: 8px;
   margin-left: 10px;
   font-size: 20px;
+  font-weight: 30px !important;
 }
 </style>
