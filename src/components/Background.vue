@@ -30,7 +30,10 @@ export default {
       poster: "http://image.tmdb.org/t/p/w500/"
     };
   },
-  methods: {}
+  methods: {},
+  mounted() {
+    this.allMovies();
+  }
 };
 </script>
 
@@ -42,12 +45,12 @@ export default {
   max-width: 50%;
   height: 400px;
   align-items: flex-end;
-  color: rgb(255, 255, 255);;
+  color: rgb(255, 255, 255);
   line-height: 11px;
   font-family: Abel, sans-serif;
 }
 
-p{
+p {
   font-size: 15px;
   line-height: 26px;
   margin-top: 10px;

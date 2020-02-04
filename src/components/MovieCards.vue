@@ -1,37 +1,50 @@
 <template>
-<section>
-  
+  <section>
     <div class="flex-container">
       <div class="flex-item" v-for="(movie,index) in movies" :key="index">
-      <img class="img-fluid" @click="showTrailer()" :src="'http://image.tmdb.org/t/p/w500/' +movie.poster_path" alt="" >
+        <img class="img-fluid" :src="'http://image.tmdb.org/t/p/w500/' +movie.poster_path" alt />
       </div>
     </div>
-  
-  <div class="loader" v-if="sendRequest">Loading...</div>
 
-  <div class="button-div1" v-if="!sendRequest">
+    <div class="loader" v-if="sendRequest">Loading...</div>
+
+    <div class="button-div1" v-if="!sendRequest">
       <div class="button-div2">
-        <button @click="loadMore()" >Load More</button>
+        <button @click="loadMore()">Load More</button>
       </div>
     </div>
-    
-</section>
-  
+  </section>
 </template>
-<script>
 
-import axios from 'axios'
-import { moviesMixin } from '../moviesMixin'
+<script>
+import axios from "axios";
 export default {
-  props: {},
-  mixins: [moviesMixin],
+  props: {
+    movies: {
+      default: []
+    },
+    sendRequest: {
+      default: false
+    },
+    page: {
+      default: 1
+    }
+  },
+
+  computed: {
+    movie() {
+      if (this.movies.length > 0) {
+        return this.movies[0];
+      }
+    }
+  },
+
   methods: {
     loadMore() {
-      this.sendRequest = true;
-      this.page+=1;
-      this.allMovies(this.page);
+      this.page += 1;
+      this.$emit("loadMore", this.page);
     }
-}
+  }
 };
 </script>
 <style scoped>
@@ -40,9 +53,9 @@ div.flex-container {
   flex-wrap: wrap !important;
   width: 100% !important;
 }
-.flex-item{
-width: 20% !important;
-padding-right: 20px !important;
+.flex-item {
+  width: 20% !important;
+  padding-right: 20px !important;
 }
 .img-fluid {
   margin-top: 30px !important;
@@ -54,20 +67,21 @@ padding-right: 20px !important;
 button {
   background: #313131;
   color: white;
-  padding: 20px !important;
+  padding: 10px !important;
   width: 25% !important;
   border-radius: 40px !important;
-  font-size: 25px;  
+  font-size: 25px;
   border: none;
+  outline: none;
 }
 button:active {
-    outline: none !important;
-    border: none !important;
+  outline: none !important;
+  border: none !important;
 }
 .button-div1 {
   text-align: center;
   margin-top: 25px;
-  border: none
+  border: none;
 }
 
 .loader {
@@ -79,7 +93,11 @@ button:active {
   border-radius: 50%;
   background: #ffffff;
   background: -moz-linear-gradient(left, green 10%, rgba(255, 255, 255, 0) 42%);
-  background: -webkit-linear-gradient(left, green 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(
+    left,
+    green 10%,
+    rgba(255, 255, 255, 0) 42%
+  );
   background: -o-linear-gradient(left, green 10%, rgba(255, 255, 255, 0) 42%);
   background: -ms-linear-gradient(left, green 10%, rgba(255, 255, 255, 0) 42%);
   background: linear-gradient(to right, green 10%, rgba(255, 255, 255, 0) 42%);
@@ -98,14 +116,14 @@ button:active {
   position: absolute;
   top: 0;
   left: 0;
-  content: '';
-  }
+  content: "";
+}
 .loader:after {
   background: #ffffff;
   width: 75%;
   height: 75%;
   border-radius: 50%;
-  content: '';
+  content: "";
   margin: auto;
   position: absolute;
   top: 0;
@@ -133,5 +151,4 @@ button:active {
     transform: rotate(360deg);
   }
 }
-
 </style>

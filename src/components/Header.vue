@@ -22,6 +22,6 @@ p {
   color: white;
 }
 img {
-    margin: 0px;
+  margin: 0px;
 }
 </style>
